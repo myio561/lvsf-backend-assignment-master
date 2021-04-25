@@ -25,7 +25,9 @@ class TipsHttpServiceSpec extends FreeSpec with Matchers with MockFactory with S
     "/tips/:id" in {
       val testTipId = UUID.randomUUID()
       (mockTipService.getTip _).expects(testTipId).returns(Future.successful("test tip response"))
-      // FIXME: Finish this test please
+      Get(s"/tips/${testTipId.toString}") ~> service.routes ~> check {
+        status shouldBe StatusCodes.OK
+      }
     }
   }
 }
